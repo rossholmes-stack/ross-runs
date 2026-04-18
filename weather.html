@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather — Ross Runs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="contact-header">
+    <nav class="nav">
+      <a href="index.html" class="logo">ROSS RUNS</a>
+      <ul>
+        <li><a href="index.html#stats">Stats</a></li>
+        <li><a href="index.html#routes">Routes</a></li>
+        <li><a href="index.html#log">Log</a></li>
+        <li><a href="index.html#gear">Gear</a></li>
+        <li><a href="training.html">Training</a></li>
+        <li><a href="weather.html" class="nav-active">Weather</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- WEATHER -->
+  <main class="weather-main">
+    <div class="weather-inner">
+
+      <div class="weather-state" id="weatherLoading">
+        <p class="weather-state-msg">Fetching your location...</p>
+      </div>
+
+      <div class="weather-state hidden" id="weatherError">
+        <p class="weather-state-msg" id="weatherErrorMsg"></p>
+        <button class="btn" onclick="getWeather()">Try Again</button>
+      </div>
+
+      <div class="weather-content hidden" id="weatherContent">
+        <p class="hero-label" id="weatherLocation"></p>
+
+        <div class="weather-hero">
+          <span class="weather-temp" id="weatherTemp"></span>
+          <span class="weather-unit">°C</span>
+        </div>
+        <p class="weather-condition" id="weatherCondition"></p>
+
+        <div class="weather-stats">
+          <div class="weather-stat">
+            <span class="weather-stat-val" id="weatherFeelsLike"></span>
+            <span class="weather-stat-name">Feels Like</span>
+          </div>
+          <div class="weather-stat">
+            <span class="weather-stat-val" id="weatherWind"></span>
+            <span class="weather-stat-name">Wind km/h</span>
+          </div>
+          <div class="weather-stat">
+            <span class="weather-stat-val" id="weatherHumidity"></span>
+            <span class="weather-stat-name">Humidity %</span>
+          </div>
+        </div>
+
+        <div id="weatherAdvice"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span class="logo">ROSS RUNS</span>
+    <p>Built with sweat, Git, and VS Code.</p>
+  </footer>
+
+  <script>
+    const WEATHER_CODES = {
+      0:  { label: 'Clear Sky',         icon: '☀️' },
+      1:  { label: 'Mainly Clear',      icon: '🌤️' },
+      2:  { label: 'Partly Cloudy',     icon: '⛅' },
+      3:  { label: 'Overcast',          icon: '☁️' },
+      45: { label: 'Foggy',             icon: '🌫️' },
+      48: { label: 'Icy Fog',           icon: '🌫️' },
+      51: { label: 'Light Drizzle',     icon: '🌦️' },
+      53: { label: 'Drizzle',           icon: '🌦️' },
+      55: { label: 'Heavy Drizzle',     icon: '🌧️' },
+      61: { label: 'Light Rain',        icon: '🌧️' },
+      63: { label: 'Rain',              icon: '🌧️' },
+      65: { label: 'Heavy Rain',        icon: '🌧️' },
+      71: { label: 'Light Snow',        icon: '🌨️' },
+      73: { label: 'Snow',              icon: '❄️' },
+      75: { label: 'Heavy Snow',        icon: '❄️' },
+      80: { label: 'Rain Showers',      icon: '🌦️' },
+      81: { label: 'Showers',           icon: '🌧️' },
+      82: { label: 'Heavy Showers',     icon: '⛈️' },
+      95: { label: 'Thunderstorm',      icon: '⛈️' },
+      96: { label: 'Thunderstorm',      icon: '⛈️' },
+      99: { label: 'Thunderstorm',      icon: '⛈️' },
+    };
+
+    function runningAdvice(temp, wind, code) {
+      if ([95, 96, 99, 82].includes(code))
+        return { good: false, label: 'Skip it', note: 'Thunderstorm or heavy showers — not worth the risk.' };
+      if (temp > 28)
+        return { good: false, label: 'Too hot', note: 'High heat risk. If you must run, go at sunrise and keep it short.' };
+      if (temp < -5)
+        return { good: false, label: 'Very cold', note: 'Layer up in three and shorten the session, or cross-train instead.' };
+      if (wind > 40)
+        return { good: false, label: 'Strong winds', note: 'Headwinds will cost you. Good mental training — or take the day off.' };
+      if (temp >= 8 && temp <= 18 && wind < 20 && code <= 2)
+        return { good: true,  label: 'Perfect conditions', note: 'Ideal running weather. No excuses.' };
+      return { good: true, label: 'Good to run', note: 'Conditions are fine. Dress for the temperature and get out there.' };
+    }
+
+    async function getWeather() {
+      show('weatherLoading');
+
+      if (!navigator.geolocation) {
+        showError('Geolocation is not supported by your browser.');
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(async ({ coords }) => {
+        const { latitude: lat, longitude: lon } = coords;
+        try {
+          const [weatherRes, locationRes] = await Promise.all([
+            fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,relative_humidity_2m&wind_speed_unit=kmh`),
+            fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`)
+          ]);
+
+          const { current } = await weatherRes.json();
+          const location = await locationRes.json();
+
+          const condition = WEATHER_CODES[current.weather_code] ?? { label: 'Unknown', icon: '🌡️' };
+          const advice = runningAdvice(current.temperature_2m, current.wind_speed_10m, current.weather_code);
+
+          const city = location.address.city || location.address.town || location.address.village || location.address.county || 'Your Location';
+          const country = location.address.country_code?.toUpperCase() ?? '';
+
+          document.getElementById('weatherLocation').textContent = country ? `${city}, ${country}` : city;
+          document.getElementById('weatherTemp').textContent = Math.round(current.temperature_2m);
+          document.getElementById('weatherCondition').textContent = `${condition.icon}  ${condition.label}`;
+          document.getElementById('weatherFeelsLike').textContent = `${Math.round(current.apparent_temperature)}°`;
+          document.getElementById('weatherWind').textContent = Math.round(current.wind_speed_10m);
+          document.getElementById('weatherHumidity').textContent = current.relative_humidity_2m;
+
+          document.getElementById('weatherAdvice').innerHTML = `
+            <div class="advice-box ${advice.good ? 'advice-good' : 'advice-bad'}">
+              <span class="advice-label">${advice.label}</span>
+              <p>${advice.note}</p>
+            </div>`;
+
+          show('weatherContent');
+        } catch {
+          showError('Could not load weather data. Please try again.');
+        }
+      }, () => {
+        showError('Location access denied. Allow location access and try again.');
+      });
+    }
+
+    function show(id) {
+      ['weatherLoading', 'weatherError', 'weatherContent'].forEach(el => {
+        document.getElementById(el).classList.toggle('hidden', el !== id);
+      });
+    }
+
+    function showError(msg) {
+      document.getElementById('weatherErrorMsg').textContent = msg;
+      show('weatherError');
+    }
+
+    getWeather();
+  </script>
+
+</body>
+</html>

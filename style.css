@@ -527,6 +527,138 @@ h2 {
 }
 
 /* ===========================
+   WEATHER PAGE
+=========================== */
+.weather-main {
+  min-height: calc(100vh - 81px - 81px);
+  background: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 4rem;
+}
+
+.weather-inner {
+  width: 100%;
+  max-width: 560px;
+  text-align: center;
+}
+
+.weather-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.weather-state-msg {
+  font-size: 1rem;
+  color: var(--grey-light);
+  letter-spacing: 0.05em;
+}
+
+.weather-hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  line-height: 1;
+  margin: 0.5rem 0 0.75rem;
+}
+
+.weather-temp {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(7rem, 20vw, 14rem);
+  color: var(--white);
+  line-height: 1;
+}
+
+.weather-unit {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  color: var(--orange);
+  margin-top: 1.2rem;
+}
+
+.weather-condition {
+  font-size: 1.2rem;
+  color: var(--text-light);
+  letter-spacing: 0.05em;
+  margin-bottom: 3rem;
+}
+
+.weather-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--grey-mid);
+  border: 1px solid var(--grey-mid);
+  margin-bottom: 2.5rem;
+}
+
+.weather-stat {
+  background: var(--grey);
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.weather-stat-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  color: var(--white);
+  line-height: 1;
+}
+
+.weather-stat-name {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--grey-light);
+}
+
+.advice-box {
+  padding: 1.5rem 2rem;
+  text-align: left;
+  border-left: 3px solid;
+}
+
+.advice-good {
+  background: rgba(74, 154, 74, 0.08);
+  border-color: #4a9a4a;
+}
+
+.advice-bad {
+  background: rgba(232, 80, 10, 0.08);
+  border-color: var(--orange);
+}
+
+.advice-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.advice-good .advice-label { color: #6aba6a; }
+.advice-bad .advice-label  { color: var(--orange-light); }
+
+.advice-box p {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  line-height: 1.6;
+}
+
+.hidden { display: none !important; }
+
+@media (max-width: 900px) {
+  .weather-main { padding: 4rem 2rem; }
+  .weather-stats { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ===========================
    CONTACT
 =========================== */
 .contact-header {
