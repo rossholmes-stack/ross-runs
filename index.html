@@ -1,11 +1,210 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>My First Site 2121</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <h1>Hello, Ross Holmes!</h1>
-    <p>My first local website.</p>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ross Runs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <nav class="nav">
+      <span class="logo">ROSS RUNS</span>
+      <ul>
+        <li><a href="#stats">Stats</a></li>
+        <li><a href="#routes">Routes</a></li>
+        <li><a href="#log">Log</a></li>
+        <li><a href="#gear">Gear</a></li>
+      </ul>
+    </nav>
+    <div class="hero-content">
+      <p class="hero-label">Personal Running Journal</p>
+      <h1>Every km<br><em>counts.</em></h1>
+      <p class="hero-sub">Tracking the miles, the early mornings,<br>and everything in between.</p>
+      <a href="#stats" class="btn">See My Stats</a>
+    </div>
+    <div class="hero-distance">
+      <span>42.2</span>
+      <p>Personal Best — Marathon (km)</p>
+    </div>
+  </header>
+
+  <!-- STATS -->
+  <section class="stats" id="stats">
+    <div class="stats-label">2025 SEASON</div>
+    <div class="stats-grid">
+      <div class="stat">
+        <span class="stat-num">847</span>
+        <span class="stat-name">Total km</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">124</span>
+        <span class="stat-name">Runs</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">5:12</span>
+        <span class="stat-name">Best pace /km</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">68h</span>
+        <span class="stat-name">Time on feet</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROUTES -->
+  <section class="routes" id="routes">
+    <div class="section-header">
+      <h2>Favourite Routes</h2>
+      <p>The roads and trails I keep coming back to</p>
+    </div>
+    <div class="routes-grid">
+      <div class="route-card">
+        <div class="route-img route-img-1"></div>
+        <div class="route-info">
+          <span class="route-distance">8.4 km</span>
+          <h3>Lakeshore Loop</h3>
+          <p>Flat and fast along the waterfront. Perfect for tempo runs with great views.</p>
+          <span class="route-tag">Road</span>
+          <span class="route-tag">Flat</span>
+        </div>
+      </div>
+      <div class="route-card">
+        <div class="route-img route-img-2"></div>
+        <div class="route-info">
+          <span class="route-distance">12.1 km</span>
+          <h3>Valley Trail</h3>
+          <p>Technical single track through the ravine. Muddy in spring, magical in autumn.</p>
+          <span class="route-tag">Trail</span>
+          <span class="route-tag">Hilly</span>
+        </div>
+      </div>
+      <div class="route-card">
+        <div class="route-img route-img-3"></div>
+        <div class="route-info">
+          <span class="route-distance">5.0 km</span>
+          <h3>Neighbourhood 5k</h3>
+          <p>The trusty local loop. Early mornings, quiet streets, and good coffee after.</p>
+          <span class="route-tag">Road</span>
+          <span class="route-tag">Easy</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RUN LOG -->
+  <section class="log" id="log">
+    <div class="section-header light">
+      <h2>Recent Runs</h2>
+      <p>The latest entries from the journal</p>
+    </div>
+    <div class="log-list">
+      <div class="log-entry">
+        <div class="log-date">
+          <span class="day">14</span>
+          <span class="month">APR</span>
+        </div>
+        <div class="log-details">
+          <h4>Morning tempo — Lakeshore</h4>
+          <p>Felt strong from the first km. Negative split. Wind was fierce but worth it.</p>
+        </div>
+        <div class="log-metrics">
+          <span>9.2 km</span>
+          <span>5:18 /km</span>
+          <span>49 min</span>
+        </div>
+      </div>
+      <div class="log-entry">
+        <div class="log-date">
+          <span class="day">11</span>
+          <span class="month">APR</span>
+        </div>
+        <div class="log-details">
+          <h4>Easy recovery run</h4>
+          <p>Kept it slow and steady. Legs still heavy from Sunday's long run.</p>
+        </div>
+        <div class="log-metrics">
+          <span>5.0 km</span>
+          <span>6:05 /km</span>
+          <span>30 min</span>
+        </div>
+      </div>
+      <div class="log-entry">
+        <div class="log-date">
+          <span class="day">07</span>
+          <span class="month">APR</span>
+        </div>
+        <div class="log-details">
+          <h4>Long Sunday run — Valley Trail</h4>
+          <p>Best trail run of the year. Crisp morning, quiet trails, saw a deer.</p>
+        </div>
+        <div class="log-metrics">
+          <span>18.5 km</span>
+          <span>5:45 /km</span>
+          <span>1h 46m</span>
+        </div>
+      </div>
+      <div class="log-entry">
+        <div class="log-date">
+          <span class="day">03</span>
+          <span class="month">APR</span>
+        </div>
+        <div class="log-details">
+          <h4>Interval session — track</h4>
+          <p>8 x 400m. Last rep was the fastest. Starting to find the speed again.</p>
+        </div>
+        <div class="log-metrics">
+          <span>7.0 km</span>
+          <span>4:52 /km</span>
+          <span>34 min</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GEAR -->
+  <section class="gear" id="gear">
+    <div class="section-header">
+      <h2>Current Gear</h2>
+      <p>What's on my feet and in my kit</p>
+    </div>
+    <div class="gear-grid">
+      <div class="gear-item">
+        <div class="gear-icon">👟</div>
+        <h4>Road Shoes</h4>
+        <p>Nike Pegasus 41</p>
+        <span class="gear-km">612 km</span>
+      </div>
+      <div class="gear-item">
+        <div class="gear-icon">🥾</div>
+        <h4>Trail Shoes</h4>
+        <p>Salomon Speedcross 6</p>
+        <span class="gear-km">234 km</span>
+      </div>
+      <div class="gear-item">
+        <div class="gear-icon">⌚</div>
+        <h4>GPS Watch</h4>
+        <p>Garmin Forerunner 265</p>
+        <span class="gear-km">Since Jan 2024</span>
+      </div>
+      <div class="gear-item">
+        <div class="gear-icon">🎧</div>
+        <h4>Headphones</h4>
+        <p>Shokz OpenRun Pro</p>
+        <span class="gear-km">Bone conduction</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span class="logo">ROSS RUNS</span>
+    <p>Built with sweat, Git, and VS Code.</p>
+  </footer>
+
+</body>
 </html>
